@@ -8,12 +8,19 @@ import GameStats from "./GameStats";
 
 interface GameBoardProps {
   className?: string;
+  showInstructions: boolean;
+  isVictory: boolean;
+  onVictory: () => void;
+  time: number;
+  setTime: React.Dispatch<React.SetStateAction<number>>;
+  onPlayAgain: () => void;
 }
 
 // Define the VictoryModal component directly in this file
 interface VictoryModalProps {
   moves: number;
   time: number;
+  isVictory: boolean;
   onPlayAgain: () => void;
   open: boolean;
 }
@@ -23,6 +30,7 @@ const VictoryModal: React.FC<VictoryModalProps> = ({
   time = 0,
   onPlayAgain = () => {},
   open = false,
+  isVictory = false,
 }) => {
   if (!open) return null;
 
@@ -43,8 +51,7 @@ const VictoryModal: React.FC<VictoryModalProps> = ({
             <div className="text-center">
               <p className="text-sm text-gray-500">Time</p>
               <p className="text-xl font-semibold">
-                {Math.floor(time / 60)}:
-                {(time % 60).toString().padStart(2, "0")}
+                {isVictory ? `${Math.floor(time / 60)}:${(time % 60).toString().padStart(2, "0")}` : "00:00"}
               </p>
             </div>
             <div className="text-center">
@@ -66,12 +73,12 @@ const VictoryModal: React.FC<VictoryModalProps> = ({
   );
 };
 
-const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
+const GameBoard: React.FC<GameBoardProps> = ({ className = "", showInstructions, isVictory, onVictory, time, setTime, onPlayAgain }) => {
   // Game state
   const [difficulty, setDifficulty] = useState<string>("Medium");
   const [moves, setMoves] = useState<number>(0);
-  const [time, setTime] = useState<number>(0);
-  const [isGameActive, setIsGameActive] = useState<boolean>(true);
+  // const [time, setTime] = useState<number>(0);
+  // const [isGameActive, setIsGameActive] = useState<boolean>(true);
   const [showVictory, setShowVictory] = useState<boolean>(false);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [resetTrigger, setResetTrigger] = useState<number>(0);
@@ -80,7 +87,8 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
   const handleReset = () => {
     setMoves(0);
     setTime(0);
-    setIsGameActive(true);
+    setTime(0);
+    // setIsGameActive(true);
     setShowVictory(false);
     setResetTrigger((prev) => prev + 1);
   };
@@ -97,8 +105,11 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
   // Handle victory
   const handleVictory = () => {
     // Stop the timer by setting isGameActive to false
-    setIsGameActive(false);
+    // setIsGameActive(false);
     setShowVictory(true);
+    console.log("handleVictory called");
+    onVictory();
+    console.log("onVictory called");
   };
 
   // Handle difficulty change
@@ -106,7 +117,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
     setDifficulty(newDifficulty);
     setMoves(0);
     setTime(0);
-    setIsGameActive(true);
+    // setIsGameActive(true);
     setShowVictory(false);
     setResetTrigger((prev) => prev + 1);
   };
@@ -119,24 +130,27 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
   // Handle play again from victory modal
   const handlePlayAgain = () => {
     handleReset();
+    onPlayAgain();
   };
 
   // Timer effect
   useEffect(() => {
     let interval: number | null = null;
 
-    if (isGameActive) {
+    if (!showInstructions && !isVictory) {
       interval = window.setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
+        setTime(prevTime => prevTime + 1);
       }, 1000);
-    } else if (interval) {
+    } else {
       clearInterval(interval);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isGameActive]);
+  }, [showInstructions, isVictory]);
+
+  console.log(`showInstructions: ${showInstructions}, isVictory: ${isVictory}`);
 
   return (
     <motion.div
@@ -154,7 +168,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
         <GameStats
           moves={moves}
           time={time}
-          isActive={isGameActive}
+          isActive={!showInstructions && !isVictory}
           className="mb-4"
         />
 
@@ -164,7 +178,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
             difficulty={difficulty.toLowerCase() as "easy" | "medium" | "hard"}
             onMove={handleMove}
             onVictory={handleVictory}
-            isGameActive={isGameActive}
+            isGameActive={!showInstructions && !isVictory}
             resetTrigger={resetTrigger}
           />
         </div>
@@ -183,6 +197,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
       <VictoryModal
         open={showVictory}
         time={time}
+        isVictory={isVictory}
         moves={moves}
         onPlayAgain={handlePlayAgain}
       />

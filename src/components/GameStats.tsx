@@ -44,6 +44,8 @@ const GameStats: React.FC<GameStatsProps> = ({
     };
   }, [isActive]);
 
+  console.log(`GameStats isActive: ${isActive}`);
+
   return (
     <div
       className={cn(

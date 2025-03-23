@@ -1,0 +1,56 @@
+SlideCode - Crack the Puzzle, Claim the Glory!
+
+Project Overview
+SlideCode is a captivating 3x3 sliding puzzle game where players race to arrange numbered tiles into the elusive sequence 80136653—a fixed code baked into the challenge. With silky-smooth animations, crisp sound effects, adjustable difficulty, and performance tracking via timer and move counter, this isn’t just a puzzle—it’s a satisfying test of skill and speed. Perfect for developers looking to craft an addictive, polished app with modern tools.
+Core Features & Mechanics
+Game Grid & Movement  
+A 3x3 grid featuring 8 numbered tiles and 1 empty space.  
+
+Tiles glide into the empty slot with classic 8-puzzle mechanics—drag or click to play.  
+
+Initial shuffle uses a parity-check algorithm to guarantee every puzzle is solvable, no frustration allowed!
+
+Winning Condition  
+Victory triggers when tiles snap into 80136653 (a quirky, assignment-set goal—think of it as cracking a secret vault!).  
+
+A celebratory “You nailed it!” message pops up, with best time and move count saved for bragging rights.
+
+UI & UX  
+Sleek, minimal design with fluid tile animations that feel oh-so-satisfying.  
+
+Drag or click to move tiles—intuitive for all players.  
+
+Difficulty Levels:  
+Easy: Light shuffle, perfect for newbies.  
+
+Medium: Trickier randomization to test your wits.  
+
+Hard: Max shuffle chaos for puzzle masters.
+
+A quick instruction overlay welcomes first-timers: “Slide tiles, crack the code, win!”
+
+Sound & Visual Effects  
+Subtle clicks or whooshes as tiles slide into place.  
+
+A triumphant sound-and-visual burst (think confetti or a glow) when the puzzle’s solved.  
+
+Background music with a toggle—let players vibe or focus in silence.
+
+Performance Tracking & Stats  
+Timer: Every second counts—beat your best!  
+
+Move Counter: Fewer moves, bigger glory.  
+
+Stats persist across sessions, with a leaderboard as a stretch goal for future updates.
+
+Technical Stack  
+Frontend: React.js (powered by Vite for lightning-fast builds).  
+
+State Management: React State or Context API for clean, responsive updates.  
+
+Animations: Framer Motion for buttery-smooth transitions (fallback to CSS if needed).  
+
+Audio: Howler.js for rich soundscapes, or HTML5 audio for simplicity.  
+
+Deployment: Vercel or Netlify—deployed in a snap, ready to play anywhere.
+

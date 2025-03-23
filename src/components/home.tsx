@@ -8,6 +8,8 @@ import { Puzzle, Info, Github } from "lucide-react";
 const Home: React.FC = () => {
   const [showInstructions, setShowInstructions] = useState<boolean>(false);
   const [firstVisit, setFirstVisit] = useState<boolean>(true);
+  const [isVictory, setIsVictory] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0);
 
   // Check if this is the user's first visit
   useEffect(() => {
@@ -45,13 +47,16 @@ const Home: React.FC = () => {
         </header>
 
         <div className="flex flex-col items-center justify-center">
-          <GameBoard className="w-full max-w-md" />
+          <GameBoard className="w-full max-w-md" showInstructions={showInstructions} isVictory={isVictory} onVictory={() => setIsVictory(true)} time={time} setTime={setTime} onPlayAgain={() => setIsVictory(false)} />
 
           <div className="mt-6">
             <Button
               variant="outline"
               className="px-6"
-              onClick={() => setShowInstructions(true)}
+              onClick={() => {
+                setShowInstructions(true);
+                setIsVictory(false);
+              }}
             >
               View Instructions
             </Button>
@@ -76,7 +81,10 @@ const Home: React.FC = () => {
 
       <InstructionsOverlay
         isOpen={showInstructions}
-        onClose={() => setShowInstructions(false)}
+        onClose={() => {
+          setShowInstructions(false);
+          setIsVictory(false);
+        }}
         firstTime={firstVisit}
       />
     </div>
