@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import PuzzleGrid from "./PuzzleGrid";
 import GameControls from "./GameControls";
+import Confetti from "react-confetti";
 import GameStats from "./GameStats";
 // Create a custom implementation of VictoryModal since the import is causing issues
 // We'll implement it directly in this file instead of importing it
@@ -32,10 +33,27 @@ const VictoryModal: React.FC<VictoryModalProps> = ({
   open = false,
   isVictory = false,
 }) => {
+  const [runConfetti, setRunConfetti] = useState(false);
+  useEffect(() => {
+    if (open && isVictory) {
+      setRunConfetti(true);
+      setTimeout(() => {
+        setRunConfetti(false);
+      }, 5000);
+    }
+  }, [open, isVictory]);
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      {isVictory && runConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          run={runConfetti}
+        />
+      )}
       <motion.div
         className="bg-white rounded-xl p-6 max-w-md w-full shadow-lg"
         initial={{ scale: 0.9, opacity: 0 }}
