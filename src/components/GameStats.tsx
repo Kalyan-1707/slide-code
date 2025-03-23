@@ -24,6 +24,11 @@ const GameStats: React.FC<GameStatsProps> = ({
   const [currentTime, setCurrentTime] = useState<number>(time);
 
   useEffect(() => {
+    // Reset current time when time prop changes
+    setCurrentTime(time);
+  }, [time]);
+
+  useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
 
     if (isActive) {

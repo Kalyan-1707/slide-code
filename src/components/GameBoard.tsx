@@ -96,18 +96,19 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
 
   // Handle victory
   const handleVictory = () => {
+    // Stop the timer by setting isGameActive to false
     setIsGameActive(false);
     setShowVictory(true);
-    // Play victory sound if enabled
-    if (soundEnabled) {
-      // Victory sound effect would be implemented here
-    }
   };
 
   // Handle difficulty change
   const handleDifficultyChange = (newDifficulty: string) => {
     setDifficulty(newDifficulty);
-    handleReset();
+    setMoves(0);
+    setTime(0);
+    setIsGameActive(true);
+    setShowVictory(false);
+    setResetTrigger((prev) => prev + 1);
   };
 
   // Handle sound toggle
@@ -128,6 +129,8 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
       interval = window.setInterval(() => {
         setTime((prevTime) => prevTime + 1);
       }, 1000);
+    } else if (interval) {
+      clearInterval(interval);
     }
 
     return () => {
@@ -178,10 +181,10 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "" }) => {
 
       {/* Victory Modal */}
       <VictoryModal
-        moves={moves}
-        time={time}
-        onPlayAgain={handlePlayAgain}
         open={showVictory}
+        time={time}
+        moves={moves}
+        onPlayAgain={handlePlayAgain}
       />
     </motion.div>
   );

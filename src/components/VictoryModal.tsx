@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Trophy,
@@ -7,6 +7,8 @@ import {
   Sparkles,
   RotateCcw,
 } from "lucide-react";
+import ReactConfetti from "react-confetti";
+import useSound from "use-sound";
 import {
   Dialog,
   DialogContent,
@@ -46,11 +48,19 @@ const VictoryModal = ({
     bestMoves: 35,
   },
 }: VictoryModalProps) => {
+  const [playVictory] = useSound("/sounds/victory.mp3", { volume: 0.5 });
+
+  useEffect(() => {
+    if (isOpen) {
+      playVictory();
+    }
+  }, [isOpen, playVictory]);
   const isNewBestTime = stats.bestTime ? stats.time < stats.bestTime : true;
   const isNewBestMoves = stats.bestMoves ? stats.moves < stats.bestMoves : true;
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      {isOpen && <ReactConfetti recycle={false} numberOfPieces={500} />}
       <DialogContent className="bg-gradient-to-b from-indigo-50 to-blue-50 border-2 border-indigo-200 max-w-md">
         <DialogHeader>
           <motion.div

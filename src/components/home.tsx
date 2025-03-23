@@ -44,47 +44,25 @@ const Home: React.FC = () => {
           </p>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
           <GameBoard className="w-full max-w-md" />
 
-          <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-            <h2 className="text-xl font-bold text-indigo-800 mb-4 flex items-center">
-              <Info className="h-5 w-5 mr-2" />
-              About SlideCode
-            </h2>
-            <div className="space-y-4 text-slate-700">
-              <p>
-                SlideCode is a challenging 3x3 sliding puzzle where your goal is
-                to arrange the tiles to form the specific sequence:{" "}
-                <span className="font-mono font-bold">80136653</span>.
-              </p>
-              <p>
-                Move tiles by clicking on them when they're adjacent to the
-                empty space. The game tracks your time and moves, so you can
-                challenge yourself to improve with each attempt.
-              </p>
-              <p>
-                Choose from three difficulty levels to test your puzzle-solving
-                skills. Every puzzle is guaranteed to be solvable!
-              </p>
-              <div className="pt-4">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setShowInstructions(true)}
-                >
-                  View Instructions
-                </Button>
-              </div>
-            </div>
+          <div className="mt-6">
+            <Button
+              variant="outline"
+              className="px-6"
+              onClick={() => setShowInstructions(true)}
+            >
+              View Instructions
+            </Button>
           </div>
         </div>
 
         <footer className="mt-12 text-center text-indigo-600/70 text-sm">
-          <p>© 2023 SlideCode Puzzle Game</p>
+          <p>© 2025 SlideCode Puzzle Game</p>
           <div className="flex items-center justify-center mt-2">
             <a
-              href="https://github.com"
+              href="https://github.com/Kalyan-1707/slide-code"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center hover:text-indigo-800 transition-colors"
