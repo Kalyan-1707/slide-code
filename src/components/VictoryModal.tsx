@@ -60,7 +60,7 @@ const VictoryModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      {isOpen && <ReactConfetti recycle={false} numberOfPieces={500} />}
+      {isOpen && <ReactConfetti recycle={false} numberOfPieces={50000} tweenDuration={1000000} />}
       <DialogContent className="bg-gradient-to-b from-indigo-50 to-blue-50 border-2 border-indigo-200 max-w-md">
         <DialogHeader>
           <motion.div

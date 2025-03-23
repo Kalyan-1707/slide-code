@@ -10,6 +10,7 @@ const Home: React.FC = () => {
   const [firstVisit, setFirstVisit] = useState<boolean>(true);
   const [isVictory, setIsVictory] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
+  const [runConfetti, setRunConfetti] = useState<boolean>(false);
 
   // Check if this is the user's first visit
   useEffect(() => {
@@ -47,7 +48,7 @@ const Home: React.FC = () => {
         </header>
 
         <div className="flex flex-col items-center justify-center">
-          <GameBoard className="w-full max-w-md" showInstructions={showInstructions} isVictory={isVictory} onVictory={() => setIsVictory(true)} time={time} setTime={setTime} onPlayAgain={() => setIsVictory(false)} />
+          <GameBoard className="w-full max-w-md" showInstructions={showInstructions} isVictory={isVictory} onVictory={() => setIsVictory(true)} time={time} setTime={setTime} onPlayAgain={() => setIsVictory(false)} setRunConfetti={setRunConfetti} />
 
           <div className="mt-6">
             <Button

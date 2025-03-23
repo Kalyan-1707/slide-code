@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import PuzzleGrid from "./PuzzleGrid";
 import GameControls from "./GameControls";
@@ -15,6 +15,7 @@ interface GameBoardProps {
   time: number;
   setTime: React.Dispatch<React.SetStateAction<number>>;
   onPlayAgain: () => void;
+  setRunConfetti: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Define the VictoryModal component directly in this file
@@ -34,24 +35,24 @@ const VictoryModal: React.FC<VictoryModalProps> = ({
   isVictory = false,
 }) => {
   const [runConfetti, setRunConfetti] = useState(false);
-  useEffect(() => {
-    if (open && isVictory) {
-      setRunConfetti(true);
-      setTimeout(() => {
-        setRunConfetti(false);
-      }, 5000);
-    }
-  }, [open, isVictory]);
+  // useEffect(() => {
+  //   if (open && isVictory) {
+  //     setRunConfetti(true);
+  //     setTimeout(() => {
+  //       setRunConfetti(false);
+  //     }, 5000);
+  //   }
+  // }, [open, isVictory]);
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      {isVictory && runConfetti && (
+      {isVictory && (
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
           recycle={false}
-          run={runConfetti}
+          run={true}
         />
       )}
       <motion.div
@@ -91,9 +92,9 @@ const VictoryModal: React.FC<VictoryModalProps> = ({
   );
 };
 
-const GameBoard: React.FC<GameBoardProps> = ({ className = "", showInstructions, isVictory, onVictory, time, setTime, onPlayAgain }) => {
+const GameBoard: React.FC<GameBoardProps> = ({ className = "", showInstructions, isVictory, onVictory, time, setTime, onPlayAgain, setRunConfetti }) => {
   // Game state
-  const [difficulty, setDifficulty] = useState<string>("Medium");
+  const [difficulty, setDifficulty] = useState<string>("Easy");
   const [moves, setMoves] = useState<number>(0);
   // const [time, setTime] = useState<number>(0);
   // const [isGameActive, setIsGameActive] = useState<boolean>(true);
@@ -128,6 +129,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "", showInstructions,
     console.log("handleVictory called");
     onVictory();
     console.log("onVictory called");
+    setRunConfetti(true);
   };
 
   // Handle difficulty change
@@ -149,6 +151,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ className = "", showInstructions,
   const handlePlayAgain = () => {
     handleReset();
     onPlayAgain();
+    setRunConfetti(false);
   };
 
   // Timer effect
